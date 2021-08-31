@@ -94,24 +94,23 @@ class ForwardSDE(BaseSDE):
     ########################################
     #                prod                  #
     ########################################
-
-    def prod_diagonal(self, g, v):
+    @staticmethod
+    def prod_diagonal(g, v):
         return g * v
 
-    def prod_default(self, g, v):
+    @staticmethod
+    def prod_default(g, v):
         return misc.batch_mvp(g, v)
 
     ########################################
     #                g_prod                #
     ########################################
-
     def g_prod_default(self, t, y, v):
         return self.prod(self.g(t, y), v)
 
     ########################################
     #             f_and_g_prod             #
     ########################################
-
     def f_and_g_prod_default1(self, t, y, v):
         return self.f(t, y), self.g_prod(t, y, v)
 
