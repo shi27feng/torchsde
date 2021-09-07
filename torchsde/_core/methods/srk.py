@@ -44,17 +44,18 @@ class SRK(base_solver.BaseSDESolver):
             self.step = self.diagonal_or_scalar_step
 
         if isinstance(sde, adjoint_sde.AdjointSDE):
-            raise ValueError(f"Stochastic Runge–Kutta methods cannot be used for adjoint SDEs, because it requires "
-                             f"direct access to the diffusion, whilst adjoint SDEs rely on a more efficient "
-                             f"diffusion-vector product. Use a different method instead.")
+            raise ValueError("Stochastic Runge–Kutta methods cannot be used for adjoint SDEs, because it requires "
+                             "direct access to the diffusion, whilst adjoint SDEs rely on a more efficient "
+                             "diffusion-vector product. Use a different method instead.")
 
         super(SRK, self).__init__(sde=sde, **kwargs)
 
-    def step(self, t0, t1, y):
+    def step(self, t0, t1, y, extra0):
         # Just to make @abstractmethod happy, as we assign during __init__.
         raise RuntimeError
 
-    def diagonal_or_scalar_step(self, t0, t1, y0):
+    def diagonal_or_scalar_step(self, t0, t1, y0, extra0):
+        del extra0
         dt = t1 - t0
         rdt = 1 / dt
         sqrt_dt = dt.sqrt()
@@ -84,9 +85,10 @@ class SRK(base_solver.BaseSDESolver):
             )
             g_prod = self.sde.g_prod(t0 + srid2.C1[s] * dt, H1s, g_weight)
             y1 = y1 + srid2.alpha[s] * f * dt + g_prod
-        return y1
+        return y1, ()
 
-    def additive_step(self, t0, t1, y0):
+    def additive_step(self, t0, t1, y0, extra0):
+        del extra0
         dt = t1 - t0
         rdt = 1 / dt
         I_k, I_k0 = self.bm(t0, t1, return_U=True)
@@ -106,4 +108,4 @@ class SRK(base_solver.BaseSDESolver):
             g_weight = sra1.beta1[i] * I_k + sra1.beta2[i] * I_k0 * rdt
             g_prod = self.sde.g_prod(t0 + sra1.C1[i] * dt, y0, g_weight)
             y1 = y1 + sra1.alpha[i] * f * dt + g_prod
-        return y1
+        return y1, ()

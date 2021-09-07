@@ -14,8 +14,8 @@
 
 import os
 import re
-import setuptools
 
+import setuptools
 
 # for simplicity we actually store the version in the __version__ attribute in the source
 here = os.path.realpath(os.path.dirname(__file__))
@@ -26,6 +26,8 @@ with open(os.path.join(here, 'torchsde', '__init__.py')) as f:
     else:
         raise RuntimeError("Unable to find __version__ string.")
 
+with open(os.path.join(here, 'README.md')) as f:
+    readme = f.read()
 
 setuptools.setup(
     name="torchsde",
@@ -33,9 +35,19 @@ setuptools.setup(
     author="Xuechen Li",
     author_email="lxuechen@cs.toronto.edu",
     description="SDE solvers and stochastic adjoint sensitivity analysis in PyTorch.",
+    long_description=readme,
+    long_description_content_type="text/markdown",
     url="https://github.com/google-research/torchsde",
     packages=setuptools.find_packages(exclude=['benchmarks', 'diagnostics', 'examples', 'tests']),
-    install_requires=['torch>=1.6.0', 'numpy==1.19.*', 'boltons>=20.2.1', 'trampoline>=0.1.2', 'scipy==1.5.*'],
+    install_requires=[
+        "boltons>=20.2.1",
+        "numpy==1.19.*;python_version<'3.7'",
+        "numpy>=1.19.*;python_version>='3.7'",
+        "scipy==1.5.*;python_version<'3.7'",
+        "scipy>=1.5;python_version>='3.7'",
+        "torch>=1.6.0",
+        "trampoline>=0.1.2",
+    ],
     python_requires='~=3.6',
     classifiers=[
         "Programming Language :: Python :: 3",

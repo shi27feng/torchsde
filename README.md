@@ -8,7 +8,7 @@ This library provides [stochastic differential equation (SDE)](https://en.wikipe
 
 ## Installation
 ```shell script
-pip install git+https://github.com/google-research/torchsde.git
+pip install torchsde
 ```
 
 **Requirements:** Python >=3.6 and PyTorch >=1.6.0.
@@ -70,7 +70,7 @@ The program outputs figures to the path specified by `<TRAIN_DIR>`.
 Training should stabilize after 500 iterations with the default hyperparameters.
 
 ### Neural SDEs as GANs
-[`examples/sde_gan.py`](examples/sde_gan.py) learns an SDE as a GAN, as in [\[2\]](https://arxiv.org/abs/2102.03657). The example trains an SDE as the generator of a GAN, whilst using a [neural CDE](https://github.com/patrick-kidger/NeuralCDE) [\[3\]](https://arxiv.org/abs/2005.08926) as the discriminator. This example can be run via
+[`examples/sde_gan.py`](examples/sde_gan.py) learns an SDE as a GAN, as in [\[2\]](https://arxiv.org/abs/2102.03657), [\[3\]](https://arxiv.org/abs/2105.13493). The example trains an SDE as the generator of a GAN, whilst using a [neural CDE](https://github.com/patrick-kidger/NeuralCDE) [\[4\]](https://arxiv.org/abs/2005.08926) as the discriminator. This example can be run via
 
 ```shell script
 python -m examples.sde_gan
@@ -79,6 +79,7 @@ python -m examples.sde_gan
 ## Citation
 
 If you found this codebase useful in your research, please consider citing either or both of:
+
 ```
 @article{li2020scalable,
   title={Scalable gradients for stochastic differential equations},
@@ -89,20 +90,23 @@ If you found this codebase useful in your research, please consider citing eithe
 ```
 
 ```
-@article{kidger2020neuralsde,
-  title={Neural {SDE}s {M}ade {E}asy: {SDE}s are {I}nfinite-{D}imensional {GAN}s},
+@article{kidger2021neuralsde,
+  title={Neural {SDE}s as {I}nfinite-{D}imensional {GAN}s},
   author={Kidger, Patrick and Foster, James and Li, Xuechen and Oberhauser, Harald and Lyons, Terry},
-  journal={arXiv:2102.03657},
+  journal={International Conference on Machine Learning},
   year={2021}
 }
 ```
 
 ## References
+
 \[1\] Xuechen Li, Ting-Kam Leonard Wong, Ricky T. Q. Chen, David Duvenaud. "Scalable Gradients for Stochastic Differential Equations". *International Conference on Artificial Intelligence and Statistics.* 2020. [[arXiv]](https://arxiv.org/pdf/2001.01328.pdf)
 
-\[2\] Patrick Kidger, James Foster, Xuechen Li, Harald Oberhauser, Terry Lyons. "Neural SDEs as Infinite-Dimensional GANs". *Machine Learning and the Physical Sciences, NeurIPS* 2020 [[arXiv]](https://arxiv.org/abs/2102.03657)
+\[2\] Patrick Kidger, James Foster, Xuechen Li, Harald Oberhauser, Terry Lyons. "Neural SDEs as Infinite-Dimensional GANs". *International Conference on Machine Learning* 2021. [[arXiv]](https://arxiv.org/abs/2102.03657)
 
-\[3\] Patrick Kidger, James Morrill, James Foster, Terry Lyons, "Neural Controlled Differential Equations for Irregular Time Series". *Neural Information Processing Systems* 2020. [[arXiv]](https://arxiv.org/abs/2005.08926)
+\[3\] Patrick Kidger, James Foster, Xuechen Li, Terry Lyons. "Efficient and Accurate Gradients for Neural SDEs". 2021. [[arXiv]](https://arxiv.org/abs/2105.13493)
+
+\[4\] Patrick Kidger, James Morrill, James Foster, Terry Lyons, "Neural Controlled Differential Equations for Irregular Time Series". *Neural Information Processing Systems* 2020. [[arXiv]](https://arxiv.org/abs/2005.08926)
 
 ---
 This is a research project, not an official Google product. 
